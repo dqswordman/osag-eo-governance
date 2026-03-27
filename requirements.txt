@@ -1,0 +1,9 @@
+numpy>=1.26
+pandas>=2.2
+matplotlib>=3.8
+PyYAML>=6.0
+scipy>=1.13
+scikit-learn>=1.5
+tifffile>=2024.2
+torch>=2.8
+requests>=2.32

@@ -1,0 +1,101 @@
+formal_policy:
+  only_canonical_for_formal_runs: true
+  allow_fallback_for_debug: true
+  notes:
+    - "Fallback files may be used only for temporary debugging."
+    - "Formal reruns, thesis figures, tables, and claims must use canonical sources only."
+
+paths:
+  project_root: "."
+  data_root: "data"
+  formal_input_root: "dataset"
+  raw_hsi_dir: "data/raw/hsi"
+  raw_eurosat_dir: "data/raw/eurosat"
+  artifact_root: "artifacts/real_experiments"
+
+datasets:
+  indian_pines_corrected:
+    dataset_family: "hsi"
+    role: "feature_cube"
+    canonical: true
+    source_name: "EHU Hyperspectral Remote Sensing Scenes"
+    source_url: "https://www.ehu.eus/ccwintco/uploads/6/67/Indian_pines_corrected.mat"
+    local_path: "dataset/Indian_pines_corrected.mat"
+    verify:
+      kind: "mat_variable"
+      variable: "indian_pines_corrected"
+  indian_pines_gt:
+    dataset_family: "hsi"
+    role: "ground_truth"
+    canonical: true
+    source_name: "EHU Hyperspectral Remote Sensing Scenes"
+    source_url: "https://www.ehu.eus/ccwintco/uploads/c/c4/Indian_pines_gt.mat"
+    local_path: "dataset/Indian_pines_gt.mat"
+    verify:
+      kind: "mat_variable"
+      variable: "indian_pines_gt"
+  salinas_corrected:
+    dataset_family: "hsi"
+    role: "feature_cube"
+    canonical: true
+    source_name: "EHU Hyperspectral Remote Sensing Scenes"
+    source_url: "https://www.ehu.eus/ccwintco/uploads/a/a3/Salinas_corrected.mat"
+    local_path: "dataset/Salinas_corrected.mat"
+    verify:
+      kind: "mat_variable"
+      variable: "salinas_corrected"
+  salinas_gt:
+    dataset_family: "hsi"
+    role: "ground_truth"
+    canonical: true
+    source_name: "EHU Hyperspectral Remote Sensing Scenes"
+    source_url: "https://www.ehu.eus/ccwintco/uploads/f/fa/Salinas_gt.mat"
+    local_path: "dataset/Salinas_gt.mat"
+    verify:
+      kind: "mat_variable"
+      variable: "salinas_gt"
+  eurosat_ms_zip:
+    dataset_family: "msi"
+    role: "archive"
+    canonical: true
+    source_name: "EuroSAT official Zenodo record"
+    source_url: "https://zenodo.org/records/7711810/files/EuroSAT_MS.zip?download=1"
+    local_path: "dataset/EuroSAT_MS.zip"
+    extracted_path: "data/raw/eurosat"
+    verify:
+      kind: "md5_zip"
+      md5: "091174add3c8e680a49244acf185b9f0"
+
+debug_only_sources:
+  hf_blanchon_eurosat_msi:
+    dataset_family: "msi"
+    canonical: false
+    source_name: "Hugging Face community mirror"
+    source_ref: "blanchon/EuroSAT_MSI"
+    notes:
+      - "Community-hosted parquet mirror."
+      - "Not equivalent to the original official Zenodo release."
+      - "Do not use for formal reruns or thesis evidence."
+
+experiment:
+  seeds: [13, 21, 42, 52, 87]
+  epochs: 60
+  batch_size_hsi: 512
+  batch_size_eurosat: 256
+  lr_hsi: 0.001
+  lr_eurosat: 0.0012
+  weight_decay: 0.0001
+  dropout: 0.1
+  hidden_dim: 256
+  eurosat_pool: 4
+  grid_rows: 4
+  grid_cols: 4
+  rare_ratio: 0.2
+
+tracking:
+  required_outputs:
+    - "logs"
+    - "csv"
+    - "figures"
+    - "runtime_tables"
+  thesis_writeback_requires_all_outputs: true

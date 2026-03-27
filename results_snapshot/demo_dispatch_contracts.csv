@@ -1,0 +1,7 @@
+contract_id,contract_name,priority,target_weight,deadline_steps,palette
+0,Medical Core,3,0.22,1,#d1495b
+1,Industrial Fire Belt,3,0.2,1,#edae49
+2,Evacuation Corridor,3,0.18,2,#00798c
+3,Residential South,2,0.16,2,#30638e
+4,Floodplain East,2,0.14,2,#73a942
+5,Perimeter Background,1,0.1,4,#6c757d
