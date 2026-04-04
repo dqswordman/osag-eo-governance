@@ -14,6 +14,22 @@ The project is centered on **Observed Service Agreement Graphs (OSAG)**, a gover
 - Lightweight benchmarking scripts that wrap standard classifiers rather than introducing a new backbone family.
 - A browser-friendly dispatch demo for visualizing budgets, deadlines, coverage gaps, and missed service.
 
+## Final Defense Delivery
+
+The current final defense and submission materials are bundled in:
+
+- `final_defense_package_2026-04-08/`
+
+Within that package:
+
+- `01_thesis/` contains the final thesis PDF prepared for submission and printing.
+- `02_presentation/` contains the official current English defense deck:
+  - `osag_defense_deck_en_final.pptx`
+  - `osag_defense_deck_en_final.pdf`
+- `03_reading_md/` contains the simplified FAQ and thesis-guide files plus the final deck notes.
+- `04_demo_ready/` contains the demo launch instructions and the dashboard backup files used for defense-day readiness.
+- `05_archive_optional/` contains supporting delivery reports and the final master Figure 1 asset packaged with the defense materials.
+
 ## Repository Layout
 
 ```text
