@@ -1,17 +1,106 @@
-# 论文核心故事（中文速读版）
+# 论文主线速读
 
-这篇 thesis 真正讲的不是谁的 backbone 更强，也不是单纯追求更高的 average accuracy。它讲的是：在 Earth Observation 训练里，训练资源本身就是一种服务分配。既然训练资源会分给不同区域、不同语义组、不同优先级对象，那么这个分配过程就应该被显式建模、显式控制、显式审计。
+## 1. 先用一句话概括
+这篇论文研究的是：如何把遥感训练从“只优化平均准确率”的过程，改造成一个“能够显式控制服务分配”的治理过程。
 
-传统训练默认把样本看成一个大池子，优化的是平均损失。这样做在数学上很自然，但现实任务经常不是平均主义的。某些区域、某些稀有但关键的对象、某些高优先级服务目标，本来就比普通区域更重要。如果训练过程天然偏向样本量大的部分，那模型即使 overall accuracy 很高，也可能在真正重要的服务目标上分配失衡。
+## 2. 为什么这个问题重要
+传统训练通常默认所有样本只是在一起优化损失。
+这样做在数学上很干净，但现实任务里会有一个隐藏问题：
 
-thesis 的做法是先定义 contract。contract 就是训练治理真正关心的服务单元。然后为每个 contract 定义 target service share，也就是“理论上应该分到多少训练关注”。接着统计 empirical coverage，也就是“训练过程中实际分到了多少”。两者之间的偏差用 PrioCovErr 来衡量。OSAG 的作用，就是把这个治理目标注入训练过程。
+- 哪些区域被反复关注？
+- 哪些类别被长期忽略？
+- 哪些高优先级服务对象没有在训练中得到足够曝光？
 
-很重要的一点是：OSAG 不是一个新 backbone。它是一个轻量治理层。它包裹在普通训练流程外面，主要通过 contract-aware sampling、coverage monitoring，以及在扩展版本里加入 fairness loss 来改变训练关注分配。这样做的好处是，thesis 想证明的是治理逻辑本身，而不是靠更复杂的 backbone 把所有东西都盖过去。
+也就是说，模型可能平均上表现不错，但关键合同、关键区域或关键语义组并没有真正被“服务到”。
 
-thesis 的主证据是 fresh rerun benchmark，而不是 demo。真实 benchmark 包括 corrected Indian Pines + corrected Salinas 的联合 HSI benchmark，以及 canonical 13-band EuroSAT MSI benchmark。两条 benchmark 共同回答一个问题：当训练被看成一个 contract-governed service allocation 问题后，是否真的能在不同模态下把 policy misalignment 压下去，同时保持有竞争力的预测性能。
+## 3. 论文的核心想法是什么
+论文给训练过程加了一层轻量治理机制，这层机制就是 OSAG。
 
-最核心的结果不是“OSAG 在所有指标上都最好”，而是：OSAG family 可以把 PrioCovErr 从二十多个点压到接近 0，同时 overall accuracy 只付出很小代价，而且 high-priority performance 仍然保持竞争力。这意味着 thesis 证明的不是“更高 accuracy”，而是“更好的治理对齐”。
+它不是新 backbone，也不是要替代分类器本身。
+它做的是三件事：
 
-benchmark 是科学证据，但 benchmark 表格不容易直观看出预算、deadline、missed service 和长期稳定性是怎么变化的。所以 thesis 又加了 dispatch demo。这个 demo 的作用不是替代真实实验，而是让老师能看到治理层在一个时间推进场景里是怎么工作的。
+1. 先把数据组织成有意义的合同单元 `contract`
+2. 再给每个合同定义目标服务份额 `target service share`
+3. 再在训练过程中持续检查“实际服务”是否偏离目标
 
-最后一定要记住 thesis 的边界：HSI split 是 pixel-stratified，不是 spatial-blocked；graph 在当前实现里更多是 modeling view，不是 full explicit graph optimizer；主 benchmark 用 lightweight MLP 是为了隔离治理效应；ResMLP 只是 scoped robustness extension；reproducibility 很强，但主要是脚本和产物层面的，不是完整 git provenance ledger。
+如果偏离太大，就通过 OSAG 的采样与控制逻辑把训练注意力往目标方向拉回去。
+
+## 4. 论文里最重要的几个词
+
+### contract
+不是随便一堆样本，而是治理真正关心的服务单位。
+
+### target service share
+这个合同理论上应该得到多少训练资源。
+
+### empirical coverage
+这个合同实际上拿到了多少训练资源。
+
+### PrioCovErr
+目标份额和实际份额之间的偏差。这个指标越小，说明治理越对齐。
+
+### alpha
+控制采样时有多强地朝治理目标靠拢。
+
+### lambda_C
+控制 fairness loss 的强度，用来额外照顾高优先级且更难学的合同。
+
+## 5. 论文的证据链怎么理解
+这篇 thesis 不是只靠一个 demo，也不是只靠一张表。
+它的证据链有三层：
+
+1. 真实 benchmark fresh rerun
+2. dispatch demo
+3. Appendix A 的复现与边界说明
+
+### 第一层：真实 benchmark
+这是主证据。
+主实验来自：
+
+- corrected Indian Pines + corrected Salinas
+- EuroSAT MSI
+
+主结果表是 fresh five-seed rerun。
+结论是：OSAG 家族可以把 PrioCovErr 压到接近 0，同时保持有竞争力的 Acc_all，并提升高优先级表现。
+
+### 第二层：dispatch demo
+这不是主证据，而是行为展示。
+它回答的是：
+
+- 在有限预算下，系统如何调度观察和标注资源？
+- 哪些高优先级合同会被保障？
+- 哪些策略会出现长期覆盖偏差？
+
+所以 demo 的价值在于“把治理行为讲清楚”，不是替代 benchmark。
+
+### 第三层：Appendix A
+这一部分的作用是把可复现边界写清楚。
+它明确了：
+
+- formal input data
+- contract construction details
+- fresh output locations
+- non-git provenance boundary
+
+也就是说，论文不夸大“可复现性”，而是把已经做到的和还没做到的边界都讲明白。
+
+## 6. 论文最核心的实验结论怎么说
+最稳的讲法是：
+
+1. OSAG 的主要价值不是追求最高平均准确率，而是显著降低合同级别的策略偏差。
+2. 这种治理效果在 HSI 和 MSI 两条 benchmark 主线上都成立。
+3. 当看高优先级表现和政策对齐时，OSAG 家族明显优于只看随机采样或简单平衡策略。
+
+## 7. 哪些地方一定不能讲错
+
+1. EuroSAT fine contract 数量是 6，不是 12。
+2. Table 5.2 讲的是 absolute percentage-point differences，不是 relative percentage changes。
+3. demo 里的 `Q_high` 不是 `K`。
+4. HSI split 是 pixel-stratified，不是 spatial-blocked。
+5. graph 在当前 thesis 里更多是 modeling view，不是完整显式 graph optimizer。
+6. thesis 主线是治理层，不是 backbone SOTA。
+
+## 8. 最后怎么收束这篇论文
+如果老师问“你的 thesis 最终想表达什么”，最稳的回答是：
+
+这篇论文的核心贡献，不是提出一个更强的遥感 backbone，而是把 EO 训练里的服务分配问题显式化、可控化、可审计化。OSAG 作为轻量治理层，让训练不再只是追求平均准确率，而是能够按合同目标去分配训练注意力，并用真实 benchmark、dispatch demo 和 Appendix A 共同支撑这个结论。

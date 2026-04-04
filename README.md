@@ -24,8 +24,8 @@ Within that package:
 
 - `01_thesis/` contains the final thesis PDF prepared for submission and printing.
 - `02_presentation/` contains the official current English defense deck:
-  - `osag_defense_deck_en_final.pptx`
-  - `osag_defense_deck_en_final.pdf`
+  - `osag_defense_deck_en_current.pptx`
+  - `osag_defense_deck_en_current.pdf`
 - `03_reading_md_cn/` contains the Chinese reading and rehearsal materials, plus the bilingual slide-by-slide study script.
 - `04_code_and_demo_ready/` contains the live demo quick commands, code inspection path notes, and dashboard fallback files for defense-day readiness.
 - `05_archive_optional/` contains audit reports, rebuild reports, and archived deck-material history.

@@ -11,8 +11,8 @@ This package is the clean defense-day bundle for the locked OSAG thesis project.
 
 ## Official current presentation
 The official current deck is:
-- `02_presentation/osag_defense_deck_en_final.pptx`
-- `02_presentation/osag_defense_deck_en_final.pdf`
+- `02_presentation/osag_defense_deck_en_current.pptx`
+- `02_presentation/osag_defense_deck_en_current.pdf`
 
 ## Final thesis paper
 The final thesis PDF is:
@@ -23,7 +23,7 @@ Start with:
 1. `03_reading_md_cn/00_reading_order_cn.md`
 2. `03_reading_md_cn/01_thesis_core_story_cn.md`
 3. `03_reading_md_cn/02_defense_faq_cn.md`
-4. `03_reading_md_cn/defense_script_bilingual_slide_by_slide.md`
+4. `03_reading_md_cn/defense_script_bilingual_slide_by_slide_current.md`
 
 ## If the committee asks to see code
 First open:
