@@ -26,9 +26,9 @@ Within that package:
 - `02_presentation/` contains the official current English defense deck:
   - `osag_defense_deck_en_final.pptx`
   - `osag_defense_deck_en_final.pdf`
-- `03_reading_md/` contains the simplified FAQ and thesis-guide files plus the final deck notes.
-- `04_demo_ready/` contains the demo launch instructions and the dashboard backup files used for defense-day readiness.
-- `05_archive_optional/` contains supporting delivery reports and the final master Figure 1 asset packaged with the defense materials.
+- `03_reading_md_cn/` contains the Chinese reading and rehearsal materials, plus the bilingual slide-by-slide study script.
+- `04_code_and_demo_ready/` contains the live demo quick commands, code inspection path notes, and dashboard fallback files for defense-day readiness.
+- `05_archive_optional/` contains audit reports, rebuild reports, and archived deck-material history.
 
 ## Repository Layout
 

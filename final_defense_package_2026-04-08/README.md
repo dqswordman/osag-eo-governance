@@ -1,44 +1,36 @@
-﻿# Final Defense Package
+# Final Defense Package
 
-This folder contains the final defense and submission materials for the locked thesis project.
+This package is the clean defense-day bundle for the locked OSAG thesis project.
 
 ## Folder guide
-
-- `01_thesis/`
-  - Final thesis PDF for printing and submission.
-- `02_presentation/`
-  - Official final English defense deck in PPTX and PDF.
-- `03_reading_md/`
-  - The Markdown files recommended for defense preparation and fast review.
-- `04_demo_ready/`
-  - The demo dashboard backup files and the short launch instructions for the live demonstration.
-- `05_archive_optional/`
-  - Supporting audit and replacement reports, plus the final master Figure 1 asset.
+- `01_thesis/`: the final thesis PDF to print or submit.
+- `02_presentation/`: the official current English defense deck in PPTX and PDF.
+- `03_reading_md_cn/`: the Chinese study materials to read before defense.
+- `04_code_and_demo_ready/`: the code/demo quick-reference files for live questioning.
+- `05_archive_optional/`: audit reports, rebuild reports, archived deck variants, and other secondary records.
 
 ## Official current presentation
-
-The official current presentation is:
+The official current deck is:
 - `02_presentation/osag_defense_deck_en_final.pptx`
 - `02_presentation/osag_defense_deck_en_final.pdf`
 
-## Final paper
-
-The final paper is:
+## Final thesis paper
+The final thesis PDF is:
 - `01_thesis/main_Thesis_2026_final.pdf`
 
-## Recommended reading order
+## What to read first
+Start with:
+1. `03_reading_md_cn/00_reading_order_cn.md`
+2. `03_reading_md_cn/01_thesis_core_story_cn.md`
+3. `03_reading_md_cn/02_defense_faq_cn.md`
+4. `03_reading_md_cn/defense_script_bilingual_slide_by_slide.md`
 
-Read these files first:
-1. `03_reading_md/osag_defense_deck_notes_en_final.md`
-2. `03_reading_md/defense_faq_en_simple.md`
-3. `03_reading_md/defense_faq_zh_simple.md`
-4. `03_reading_md/thesis_guide_en_simple.md`
-5. `03_reading_md/thesis_guide_zh_simple.md`
-
-## Demo launch
-
-See `04_demo_ready/demo_launch_instructions.md`.
+## If the committee asks to see code
+First open:
+- `04_code_and_demo_ready/code_show_order_cn.md`
+- `04_code_and_demo_ready/demo_quick_commands.md`
+- `04_code_and_demo_ready/live_demo_and_code_defense_cn.md`
 
 ## Public repository
-
-Repository: `https://github.com/dqswordman/osag-eo-governance`
+GitHub repository:
+- `https://github.com/dqswordman/osag-eo-governance`

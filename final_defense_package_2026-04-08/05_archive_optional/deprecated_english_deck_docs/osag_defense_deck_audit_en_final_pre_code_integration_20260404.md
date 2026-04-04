@@ -24,8 +24,8 @@
 - Total slide count: 28
 - Main-deck slide count: 25
 - Backup slide count: 3
-- Estimated main-deck speaking time: 29.50 minutes
-- Main deck alone fits the 28-33 minute requirement: yes
+- Estimated main-deck speaking time: 35.70 minutes
+- Main deck alone fits the 28-33 minute requirement: no
 - Live demo time is not counted in the estimate.
 
 ## Code-Integration Confirmation
