@@ -1,48 +1,65 @@
 # OSAG EO Governance
 
-OSAG EO Governance is a compact public release of the thesis-aligned pipeline for governance-aware Earth Observation learning. The repository packages two practical components:
+OSAG EO Governance is the public code-and-artifact release for governance-aware Earth Observation learning built around **Observed Service Agreement Graphs (OSAG)**. The repository combines:
 
 - a script-driven rerun pipeline for contract-governed HSI and EuroSAT MSI experiments, and
-- a runnable emergency dispatch demo that turns the same governance logic into a time-stepped operational system.
+- a runnable offline dispatch demo that explains the same governance idea in an operational setting.
 
-The project is centered on **Observed Service Agreement Graphs (OSAG)**, a governance layer that makes contract-level service targets explicit during training rather than leaving allocation to raw sample frequency.
+## Current-facing entrypoints
+
+Use these folders first. They are the clean current-facing layer for the published repository.
+
+- Current thesis PDF:
+  - `thesis_current/main_Thesis_2026_current.pdf`
+- Current defense deck:
+  - `presentation_current/osag_defense_deck_en_current.pptx`
+  - `presentation_current/osag_defense_deck_en_current.pdf`
+- Current defense notes and audit:
+  - `presentation_current/osag_defense_deck_notes_en_current.md`
+  - `presentation_current/osag_defense_deck_audit_en_current.md`
+- Current offline demo:
+  - `demo_current/index.html`
+- Current reading materials:
+  - `reading_current/`
+- Current submission artifacts:
+  - `submission_current/`
+- Current organization and verification reports:
+  - `reports_current/`
 
 ## Highlights
 
 - Contract-governed training over semantically meaningful service units.
-- Fresh result snapshots aligned with the latest locked thesis benchmark.
+- Thesis-aligned result snapshots for quick public inspection.
 - Lightweight benchmarking scripts that wrap standard classifiers rather than introducing a new backbone family.
-- A browser-friendly dispatch demo for visualizing budgets, deadlines, coverage gaps, and missed service.
+- A browser-friendly offline demo for budgets, deadlines, coverage gaps, and missed service.
 
-## Final Defense Delivery
-
-The current final defense and submission materials are bundled in:
-
-- `final_defense_package_2026-04-08/`
-
-Within that package:
-
-- `01_thesis/` contains the final thesis PDF prepared for submission and printing.
-- `02_presentation/` contains the official current English defense deck:
-  - `osag_defense_deck_en_current.pptx`
-  - `osag_defense_deck_en_current.pdf`
-- `03_reading_md_cn/` contains the Chinese reading and rehearsal materials, plus the bilingual slide-by-slide study script.
-- `04_code_and_demo_ready/` contains the live demo quick commands, code inspection path notes, and dashboard fallback files for defense-day readiness.
-- `05_archive_optional/` contains audit reports, rebuild reports, and archived deck-material history.
-
-## Repository Layout
+## Repository layout
 
 ```text
 osag-eo-governance/
+|-- archive/
 |-- configs/
 |-- dataset/
+|-- demo_current/
 |-- docs/
 |   `-- images/
 |-- osag_demo/
+|-- presentation_current/
+|-- reading_current/
+|-- reports_current/
 |-- results_snapshot/
-`-- scripts/
+|-- submission_current/
+|-- scripts/
+`-- thesis_current/
 ```
 
+- `thesis_current/` is the clean thesis entrypoint for readers.
+- `presentation_current/` contains the official current defense deck set.
+- `demo_current/` contains the official current offline demo package.
+- `reading_current/` contains the current Chinese rehearsal and support materials.
+- `submission_current/` contains the current submission-facing thesis package.
+- `reports_current/` contains current organization, verification, and rebuild reports.
+- `archive/` marks legacy or superseded materials and points to older archive locations.
 - `configs/` contains the experiment configuration used by the public release.
 - `dataset/` is the expected location for canonical local inputs. Data are not redistributed here.
 - `scripts/` contains the main rerun, download, runtime, and asset-generation utilities.
@@ -50,7 +67,40 @@ osag-eo-governance/
 - `results_snapshot/` contains small thesis-aligned CSV snapshots for quick inspection.
 - `docs/images/` contains figures used in this README.
 
-## What This Release Covers
+## Current thesis, deck, and demo
+
+- Current official thesis PDF:
+  - `thesis_current/main_Thesis_2026_current.pdf`
+- Current official defense deck:
+  - `presentation_current/osag_defense_deck_en_current.pptx`
+  - `presentation_current/osag_defense_deck_en_current.pdf`
+- Current official demo:
+  - `demo_current/index.html`
+
+The current deck is the final clean English deck. The current demo is the latest offline engineered demo package.
+
+## Reading and submission materials
+
+- Current reading materials:
+  - `reading_current/`
+- Current submission package:
+  - `submission_current/`
+
+Start reading with:
+
+1. `reading_current/00_reading_order_cn.md`
+2. `reading_current/01_thesis_core_story_cn.md`
+3. `reading_current/02_defense_faq_cn.md`
+
+## Archived and legacy materials
+
+Older package-oriented materials remain available for history and audit, but they are not the current-facing entrypoints:
+
+- `final_defense_package_2026-04-08/`
+- `final_defense_package_2026-04-08/05_archive_optional/`
+- `archive/`
+
+## What this release covers
 
 This public repository focuses on the main thesis-aligned workflow:
 
@@ -74,7 +124,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Canonical Data Layout
+## Canonical data layout
 
 Place the formal inputs under `dataset/`:
 
@@ -92,7 +142,7 @@ python .\scripts\download_canonical_data.py --config .\configs\osag_real_experim
 
 For EuroSAT, the downloader verifies the official MD5 and extracts the archive to `data/raw/eurosat/`.
 
-## Running the Main Benchmark
+## Running the main benchmark
 
 The default configuration is set up for the thesis-aligned five-seed main rerun.
 
@@ -108,18 +158,32 @@ Key outputs will be written under:
 - `results/runtime/<run_name>/`
 - `logs/<run_name>/`
 
-## Running the Dispatch Demo
+## Running the current demo
 
-Generate the dispatch dashboard:
+Open the current offline demo directly:
+
+```powershell
+start .\demo_current\index.html
+```
+
+or use:
+
+```powershell
+.\demo_current\open_demo.bat
+```
+
+The current demo is static and offline. No backend or network is required.
+
+For the script-driven demo builder in the codebase, generate the dispatch dashboard with:
 
 ```powershell
 python .\osag_demo\run_visual_demo.py
 python .\osag_demo\launch_visual_demo.py
 ```
 
-The demo writes its artifacts to `osag_demo/visual_outputs/`.
+The builder writes its artifacts to `osag_demo/visual_outputs/`.
 
-## Thesis-Aligned Result Snapshot
+## Thesis-aligned result snapshot
 
 The `results_snapshot/` directory includes compact CSV exports from the locked thesis workspace:
 
@@ -131,7 +195,7 @@ The `results_snapshot/` directory includes compact CSV exports from the locked t
 
 These files are included for inspection and documentation. They are not a substitute for rerunning the pipeline from canonical inputs.
 
-## Selected Figures
+## Selected figures
 
 ### Governance Pipeline
 
@@ -149,7 +213,7 @@ These files are included for inspection and documentation. They are not a substi
 
 ![Dispatch step comparison](docs/images/dispatch_step8_comparison.png)
 
-## Operational Interpretation
+## Operational interpretation
 
 The dispatch demo is not a replacement for the benchmark. Its purpose is to visualize the operational consequence of governance:
 
@@ -165,3 +229,9 @@ If you use this code or the public release structure, please cite the associated
 ## License
 
 This repository is released under the MIT License. See `LICENSE`.
+
+## GitHub tag
+
+Current published cleanup tag:
+
+- `v2026-final-cleanup`

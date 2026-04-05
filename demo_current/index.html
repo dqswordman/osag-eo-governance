@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OSAG Engineered Demo V2</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="app">
+    <section class="panel topbar">
+      <div>
+        <div class="eyebrow">OSAG Engineered Demo V2</div>
+        <h1 id="scenarioTitle">-</h1>
+        <p id="scenarioSubtitle" class="lead">-</p>
+      </div>
+      <div class="mode-switch">
+        <button id="presentationModeBtn" class="mode-btn active">Presentation Mode</button>
+        <button id="committeeModeBtn" class="mode-btn">Committee View</button>
+      </div>
+    </section>
+    <section class="panel guide">
+      <div class="guide-grid">
+        <div class="guide-item"><div class="guide-label">Scenario</div><div id="guidedScenario" class="guide-value">-</div></div>
+        <div class="guide-item"><div class="guide-label">Operator Goal</div><div id="guidedGoal" class="guide-value">-</div></div>
+        <div class="guide-item"><div class="guide-label">Current Comparison</div><div id="guidedCompare" class="guide-value">-</div></div>
+        <div class="guide-item"><div class="guide-label">Key Takeaway</div><div id="guidedTakeaway" class="guide-value">-</div></div>
+      </div>
+      <div class="controls">
+        <div class="control"><label for="scenarioSelect">Scenario</label><select id="scenarioSelect"></select></div>
+        <div class="control"><label for="baselineSelect">Baseline policy</label><select id="baselineSelect"></select></div>
+        <div class="control"><label for="stepSlider">Time step</label><input id="stepSlider" type="range" min="0" max="9" value="4"><div id="stepReadout" class="step-readout"></div></div>
+        <div class="control"><label>Playback</label><div class="playback"><button id="prevBtn" class="btn">Previous</button><button id="nextBtn" class="btn">Next</button><button id="playBtn" class="btn primary">Play</button><button id="resetBtn" class="btn">Reset</button></div></div>
+      </div>
+      <div id="momentButtons" class="key-moments"></div>
+    </section>
+    <section class="kpi-row">
+      <div class="kpi-card primary-green"><div class="kpi-label">Compliance</div><div id="complianceValue" class="kpi-value">-</div><div id="complianceDelta" class="kpi-delta">-</div></div>
+      <div class="kpi-card primary-orange"><div class="kpi-label">Coverage error</div><div id="coverageValue" class="kpi-value">-</div><div id="coverageDelta" class="kpi-delta">-</div></div>
+      <div class="kpi-card primary-red"><div class="kpi-label">Missed service</div><div id="missedValue" class="kpi-value">-</div><div id="missedDelta" class="kpi-delta">-</div></div>
+      <div class="kpi-card primary-blue"><div class="kpi-label">Reliability</div><div id="reliabilityValue" class="kpi-value">-</div><div id="reliabilityDelta" class="kpi-delta">-</div></div>
+    </section>
+    <section class="secondary-kpis">
+      <div class="secondary-pill"><strong>Q_high:</strong> <span id="qhighValue">-</span></div>
+      <div class="secondary-pill"><strong>Backlog:</strong> <span id="backlogValue">-</span></div>
+      <div class="secondary-pill"><strong>Observe / Annotate:</strong> <span id="budgetValue">-</span></div>
+      <div class="secondary-pill"><strong>Current baseline:</strong> <span id="baselineNameValue">-</span></div>
+    </section>
+    <section class="main-grid">
+      <div class="panel map-panel">
+        <div class="map-grid">
+          <div class="map-card"><h3 id="baselineTitle">Baseline</h3><canvas id="baselineMap" width="640" height="360"></canvas><div class="map-caption">Heuristic view: local pressure is visible, but long-run contract balance is not protected explicitly.</div></div>
+          <div class="map-card"><h3>OSAG</h3><canvas id="osagMap" width="640" height="360"></canvas><div class="map-caption">Governance-aware view: urgency still matters, but target drift and revisit pressure steer the next action.</div></div>
+        </div>
+      </div>
+      <div class="side-stack">
+        <section class="panel explain-panel"><h2>Why this action differs</h2><div id="explanationPanel"></div><div class="explain-note">Use Presentation Mode for the clean story. Switch to Committee View to reveal queue, backlog, benchmark anchor, and code mapping.</div></section>
+        <section class="panel contract-panel"><h2>Contract legend</h2><div id="contractLegend" class="contract-grid"></div></section>
+      </div>
+    </section>
+    <section class="analysis-grid">
+      <section class="panel analysis-panel"><h2>Target vs Actual Service</h2><canvas id="shareCanvas" width="980" height="300"></canvas><div class="chart-note">Dark line = policy target. Orange = baseline actual share. Red = OSAG actual share. Click a contract in the legend to highlight it across the view.</div></section>
+      <section class="panel analysis-panel"><h2>OSAG advantage summary</h2><div id="advantageSummary" class="takeaway-box"></div><div class="small-note">This engineered demo is a precomputed local simulation for operator explanation. Real thesis evidence remains in the benchmark anchor shown in Committee View.</div></section>
+    </section>
+    <section id="committeeSection" class="panel committee-panel hidden">
+      <div class="committee-header">
+        <div><h2>Committee View</h2><div class="committee-copy">Use this layer for deeper questions about queue pressure, timeline behavior, the benchmark anchor, and the code path behind the demo.</div></div>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="queue">Queue &amp; backlog</button>
+        <button class="tab-btn" data-tab="evidence">Evidence anchor</button>
+        <button class="tab-btn" data-tab="code">Code mapping</button>
+      </div>
+      <div id="tab-overview" class="tab-panel active">
+        <div class="detail-grid">
+          <section class="panel analysis-panel"><h2>Timeline</h2><canvas id="timelineCanvas" width="900" height="300"></canvas><div class="small-note">Solid lines track reliability. Dashed lines track cumulative missed service. The point is long-run service stability, not local reaction only.</div></section>
+          <section class="panel analysis-panel"><h2>Contract gap snapshot</h2><canvas id="gapCanvas" width="760" height="300"></canvas><div class="small-note">Gap bars show how far each contract is from policy target at the current step. Smaller absolute gap means stronger contract alignment.</div></section>
+        </div>
+      </div>
+      <div id="tab-queue" class="tab-panel">
+        <div class="detail-grid">
+          <section class="panel analysis-panel"><h2>Mission queue and backlog</h2><div class="table-wrap"><table id="queueTable"></table></div><div class="small-note">The queue shows pending jobs, deadline pressure, target gap, and why OSAG or the heuristic selected certain contracts.</div></section>
+          <section class="panel analysis-panel"><h2>Current-step operator notes</h2><div id="operatorNotes" class="takeaway-box"></div><div class="small-note">This panel reframes the selection in operational language so it can be explained without low-level ML jargon.</div></section>
+        </div>
+      </div>
+      <div id="tab-evidence" class="tab-panel">
+        <section class="panel analysis-panel"><h2>Real thesis benchmark anchor</h2><div class="table-wrap"><table id="benchmarkTable"></table></div><div class="small-note">These rows come from the locked thesis reruns. They are separate from the synthetic engineering scenarios above and are shown only to anchor the demo back to real benchmark evidence.</div></section>
+      </div>
+      <div id="tab-code" class="tab-panel">
+        <section class="panel analysis-panel"><h2>Code and trace mapping</h2><div id="codeMapping" class="code-list"></div><div class="small-note">If the committee asks to inspect code, start from the demo builder or the dispatch core, then map back to the benchmark governance files. This page shows the safest file order.</div></section>
+      </div>
+    </section>
+  </div>
+  <script src="assets/scenarios.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
